@@ -1,20 +1,15 @@
-import { Text, type TextProps, StyleSheet } from 'react-native';
+import { Text, type TextProps, StyleSheet, StyleProp, TextStyle } from 'react-native';
+import { estilos } from '../themes/estilos';
 
-interface Props extends TextProps {};
+interface Props extends TextProps {
+  styleSheet?: StyleProp<TextStyle>,
+};
 
-export const Pantalla = ({children, ...rest}:Props) => {
+export const Pantalla = ({children, styleSheet, ...rest}:Props) => {
   return (
-    <Text style={styles.pantallaPrincipal} {...rest}>
+    <Text style={[estilos.pantalla1, styleSheet]} {...rest}>
         {children}
     </Text>
   )
 }
 
-const styles = StyleSheet.create({
-    pantallaPrincipal: {
-        fontSize: 70,
-        textAlign: 'right',
-        fontWeight:400,
-        width: '90%',
-    },
-  });

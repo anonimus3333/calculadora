@@ -1,29 +1,20 @@
-import { Pressable, Text, StyleSheet } from "react-native";
+import { Pressable, Text, StyleSheet, StyleProp, TextStyle } from "react-native";
+import { Colores } from "../themes/colores";
+import { estilos } from '../themes/estilos';
 
 interface Props {
     label: string,
-    width: number,
+    styleSheet: StyleProp<TextStyle>,
     onPress?: () => void;
 }
 
-export const BotonOperacion = ({label, width, onPress}:Props) => {
+export const BotonOperacion = ({label, styleSheet, onPress}:Props) => {
     return (
         <Pressable>
             <Text 
-                style={[styles.boton, {width}]}
+
+                style={[estilos.botonGenerico, styleSheet]}
                 onPress={onPress}>{label}</Text>
         </Pressable>
     )
 };
-
-const styles = StyleSheet.create({
-    boton: {
-        width:80,
-        textAlign: 'center',
-        padding: 10,
-        fontSize: 30,
-        fontWeight: 300,
-        borderColor: 'black',
-        borderWidth: 2,
-    }
-  });

@@ -1,4 +1,6 @@
 import {useRef, useState, useEffect} from 'react';
+import * as Haptics from 'expo-haptics';
+
 
 enum Operadores {
     sumar = '+',
@@ -70,28 +72,34 @@ export const useCalculadora = () =>{
         setNumeroAnterior(numero);
         setNumero('0');
     }
+//unificar operaciones en un metodo
 
-    const operacionDividir = () => {
+    const operacion = (op:String) =>{
         establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.dividir;
-    }
+        switch (op) {
 
-    const operacionMultiplicar = () => {
-        establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.multiplicar;
-    }
+            case "+":
+                UltimaOperacion.current = Operadores.sumar;
+                break;
+            case "-":
+                UltimaOperacion.current = Operadores.restar;
+                break;
+                case "/":
+                    UltimaOperacion.current = Operadores.dividir;
 
-    const operacionRestar = () => {
-        establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.restar;
-    }
+                break;
+                case "*":
+                    UltimaOperacion.current = Operadores.multiplicar;
 
-    const operacionSumar = () => {
-        establecerUltimoNumero();
-        UltimaOperacion.current = Operadores.sumar;
+                break;
+            default:
+                break;
+        }
     }
 
     const calcularResultado = () => {
+        Haptics.impactAsync();
+
         const [primerValor, operacion, segundoValor] = formula.split(' ');
 
         const num1 = Number(primerValor);
@@ -118,13 +126,15 @@ export const useCalculadora = () =>{
     }
 
     const resultado = () => {
-        const resultado = calcularResultado();
+        Haptics.impactAsync();
+        const resultado = calcularResultado();  
         setFormula(`${resultado}`);
         UltimaOperacion.current = undefined;
         setNumeroAnterior('0');
     }
 
     const construirNumero = (teclaNumero: string) => {
+        Haptics.impactAsync();
 
         //Verificar si se escribe el punto decimal
         if (numero.includes('.') && teclaNumero === '.') return;
@@ -158,11 +168,8 @@ export const useCalculadora = () =>{
         clean,
         cambiarSigno,
         borrarDigito,
-        operacionDividir,
-        operacionMultiplicar,
-        operacionRestar,
-        operacionSumar,
         calcularResultado,
-        resultado
+        resultado,
+        operacion
     }
 };
